@@ -1,0 +1,9 @@
+{
+  "model": "LightGBM (Optuna-tuned)",
+  "trained_on": "80 training trips (labelled points)",
+  "date": "2026-11-18T15:46:20",
+  "seed": 42,
+  "lightgbm": "4.7.0",
+  "scikit-learn": "1.7.2",
+  "usage": "Matcher('artifacts').predict_trip(folder)  or  model.predict_proba(df[features])[:, 1]"
+}

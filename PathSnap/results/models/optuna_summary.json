@@ -1,0 +1,9 @@
+{
+  "trials_total": 40,
+  "trials_completed": 27,
+  "trials_pruned": 13,
+  "best_trial": 21,
+  "best_cv_top1": 0.8429809966526025,
+  "best_cv_log_loss": 0.08258813220497432,
+  "search_seconds_this_run": 1206.9
+}
