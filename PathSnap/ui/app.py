@@ -57,6 +57,11 @@ if st.button("Run map-matching", type="primary"):
     for p in gps:
         folium.CircleMarker(p, radius=2, color="#1f77b4", fill=True, weight=0, fill_opacity=0.8).add_to(g2)
     g2.add_to(fmap)
+    start, end = res.get("start", gps[0]), res.get("end", gps[-1])
+    folium.Marker(start, tooltip="Start", popup="Start of trip",
+                  icon=folium.Icon(color="green", icon="play", prefix="fa")).add_to(fmap)
+    folium.Marker(end, tooltip="End", popup="End of trip",
+                  icon=folium.Icon(color="red", icon="flag-checkered", prefix="fa")).add_to(fmap)
     folium.LayerControl(collapsed=False).add_to(fmap)
     html = fmap.get_root().render()
     if hasattr(st, "iframe"):                       # newer Streamlit
@@ -64,4 +69,4 @@ if st.button("Run map-matching", type="primary"):
     else:                                           # older Streamlit
         import streamlit.components.v1 as components
         components.html(html, height=620)
-    st.caption("Blue = raw GPS observations, green = predicted route returned by the API.")
+    st.caption("Blue = raw GPS observations, green line = predicted route returned by the API, green pin = start, red pin = end.")

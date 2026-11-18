@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PathSnap</title>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<script src="vendor/leaflet/leaflet.js"></script>
+<style>
+  :root {
+    --blue: #1a73e8; --route: #4a8af4; --route-edge: #1559c7; --green: #188038; --red: #ea4335;
+    --text: #202124; --sub: #5f6368; --line: #dadce0; --hover: #f1f3f4; --chip: #ffffff;
+    --shadow: 0 1px 2px rgba(60,64,67,.3), 0 2px 6px 2px rgba(60,64,67,.15);
+    --font: Roboto, "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; font: 14px/1.4 var(--font); color: var(--text); }
+  #map { position: fixed; inset: 0; background: #e5e3df; }
+
+  /* search bar */
+  .search { position: fixed; top: 12px; left: 12px; z-index: 1001; width: 392px; background: #fff;
+    border-radius: 24px; box-shadow: var(--shadow); display: flex; align-items: center; height: 48px; }
+  .search .menu { width: 48px; height: 48px; border: 0; background: none; cursor: pointer; border-radius: 24px;
+    display: grid; place-items: center; color: var(--sub); }
+  .search .menu:hover { background: var(--hover); }
+  .search input { flex: 1; border: 0; outline: none; font: 15px var(--font); color: var(--text); min-width: 0; }
+  .search .go { width: 44px; height: 44px; border: 0; background: none; cursor: pointer; color: var(--blue);
+    display: grid; place-items: center; border-radius: 22px; }
+  .search .go:hover { background: var(--hover); }
+  .search .divider { width: 1px; height: 24px; background: var(--line); margin: 0 2px; }
+  .suggest { position: absolute; top: 52px; left: 0; right: 0; background: #fff; border-radius: 8px;
+    box-shadow: var(--shadow); padding: 6px 0; display: none; max-height: 340px; overflow-y: auto; }
+  .suggest.open { display: block; }
+  .suggest button { width: 100%; border: 0; background: none; text-align: left; padding: 9px 16px; cursor: pointer;
+    font: 14px var(--font); display: flex; gap: 14px; align-items: center; color: var(--text); }
+  .suggest button:hover, .suggest button.active { background: var(--hover); }
+  .suggest .ico { width: 28px; height: 28px; border-radius: 50%; background: var(--hover); display: grid;
+    place-items: center; color: var(--sub); flex: none; }
+  .suggest small { color: var(--sub); display: block; }
+
+  /* chips */
+  .chips { position: fixed; top: 14px; left: 416px; right: 70px; z-index: 1000; display: flex; gap: 8px;
+    overflow-x: auto; padding: 2px 4px 6px; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex: none; border: 0; height: 36px; padding: 0 14px; border-radius: 18px; background: var(--chip);
+    box-shadow: var(--shadow); font: 500 13.5px var(--font); color: var(--text); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px; }
+  .chip:hover { background: #f8f9fa; }
+  .chip.sel { background: #e8f0fe; color: var(--blue); }
+  .chip .acc { color: var(--green); font-weight: 500; }
+
+  /* side panel */
+  .panel { position: fixed; top: 72px; left: 12px; bottom: 24px; width: 392px; z-index: 1000; background: #fff;
+    border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; display: none; flex-direction: column; }
+  .panel.open { display: flex; }
+  .panel .head { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); }
+  .panel h1 { margin: 0; font: 400 22px var(--font); }
+  .panel .meta { color: var(--sub); margin-top: 4px; font-size: 13.5px; }
+  .actions { display: flex; gap: 22px; padding: 14px 20px; border-bottom: 1px solid var(--line); }
+  .act { border: 0; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center;
+    gap: 6px; color: var(--blue); font: 500 12px var(--font); }
+  .act .c { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; }
+  .act.primary .c { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .act:disabled { color: #9aa0a6; cursor: default; }
+  .body { overflow-y: auto; flex: 1; }
+  .summary { padding: 16px 20px; display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--line); }
+  .summary .big { font: 400 30px var(--font); color: var(--green); }
+  .summary .lbl { color: var(--sub); }
+  .summary .delta { margin-left: auto; font-size: 13px; color: var(--green); background: #e6f4ea;
+    padding: 3px 8px; border-radius: 12px; white-space: nowrap; }
+  .item { display: flex; gap: 18px; padding: 12px 20px; align-items: center; }
+  .item:hover { background: #f8f9fa; }
+  .item .ic { width: 24px; color: var(--sub); display: grid; place-items: center; flex: none; }
+  .item .k { color: var(--sub); font-size: 12.5px; }
+  .item .v { font-size: 15px; }
+  .section-title { padding: 14px 20px 6px; font: 500 14px var(--font); border-top: 1px solid var(--line); }
+  .timeline { padding: 4px 20px 16px; }
+  .tl { display: flex; gap: 14px; align-items: flex-start; position: relative; padding-bottom: 14px; }
+  .tl:not(:last-child)::after { content: ""; position: absolute; left: 7px; top: 18px; bottom: 0;
+    border-left: 2px dotted #9aa0a6; }
+  .tl .mk { width: 16px; height: 16px; border-radius: 50%; flex: none; margin-top: 2px; }
+  .tl .t1 { font-size: 14px; } .tl .t2 { color: var(--sub); font-size: 12.5px; }
+  .log { padding: 0 20px 16px; font-size: 12.5px; color: var(--sub); }
+  .log div { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #f1f3f4; }
+  .log .ok { color: var(--green); } .log .bad { color: var(--red); }
+  .placeholder { padding: 28px 20px; color: var(--sub); text-align: center; }
+
+  /* settings */
+  .settings { position: fixed; top: 72px; left: 12px; width: 392px; z-index: 1002; background: #fff; border-radius: 12px;
+    box-shadow: var(--shadow); padding: 18px 20px; display: none; }
+  .settings.open { display: block; }
+  .settings h2 { margin: 0 0 4px; font: 400 18px var(--font); }
+  .settings p { margin: 0 0 12px; color: var(--sub); font-size: 13px; }
+  .settings .row { display: flex; gap: 8px; }
+  .settings input { flex: 1; height: 38px; border: 1px solid var(--line); border-radius: 6px; padding: 0 10px;
+    font: 14px var(--font); outline: none; }
+  .settings input:focus { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+  .btn { height: 38px; border: 0; border-radius: 19px; padding: 0 18px; background: var(--blue); color: #fff;
+    font: 500 14px var(--font); cursor: pointer; }
+  .status { margin-top: 10px; font-size: 13px; color: var(--sub); display: flex; align-items: center; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #9aa0a6; }
+  .dot.ok { background: var(--green); } .dot.err { background: var(--red); }
+
+  /* map controls */
+  .ctrl { position: fixed; right: 12px; bottom: 28px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
+  .ctrl button { width: 40px; height: 40px; border: 0; background: #fff; box-shadow: var(--shadow); cursor: pointer;
+    color: var(--sub); display: grid; place-items: center; }
+  .zoom { display: flex; flex-direction: column; box-shadow: var(--shadow); border-radius: 8px; overflow: hidden; }
+  .zoom button { box-shadow: none; border-radius: 0; }
+  .zoom button + button { border-top: 1px solid #e8eaed; }
+  .ctrl .round { border-radius: 8px; }
+  .layers { position: fixed; left: 12px; bottom: 28px; z-index: 999; width: 76px; height: 76px; border-radius: 8px;
+    border: 2px solid #fff; box-shadow: var(--shadow); cursor: pointer; overflow: hidden; background: #6b8e5a;
+    display: flex; align-items: flex-end; color: #fff; font: 500 12px var(--font); padding: 6px;
+    background-size: cover; background-position: center; }
+  .layers.sat { background: #f2efe9; color: var(--text); }
+  .panel.open ~ .layers { left: 416px; }
+  .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #323232; color: #fff;
+    padding: 12px 20px; border-radius: 4px; z-index: 1003; font-size: 14px; display: none; box-shadow: var(--shadow); }
+  .loading { position: fixed; top: 60px; left: 12px; width: 392px; height: 4px; z-index: 1003; overflow: hidden;
+    border-radius: 2px; display: none; }
+  .loading::before { content: ""; position: absolute; height: 100%; width: 40%; background: var(--blue);
+    animation: load 1s infinite ease-in-out; }
+  @keyframes load { from { left: -40%; } to { left: 100%; } }
+  .leaflet-control-attribution { font-size: 10px; }
+  .start-dot { width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 5px solid #202124;
+    box-shadow: 0 1px 3px rgba(0,0,0,.4); }
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div class="search">
+  <button class="menu" id="menu" title="API settings">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+  </button>
+  <input id="q" type="text" placeholder="Search evaluation trips" autocomplete="off" spellcheck="false">
+  <button class="go" id="go" title="Run map-matching">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+  </button>
+  <div class="divider"></div>
+  <button class="go" id="dir" title="Run map-matching for the selected trip">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M21.71 11.29l-9-9a.996.996 0 00-1.41 0l-9 9a.996.996 0 000 1.41l9 9c.39.39 1.02.39 1.41 0l9-9a.996.996 0 000-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>
+  </button>
+  <div class="suggest" id="suggest"></div>
+</div>
+<div class="loading" id="loading"></div>
+<div class="chips" id="chips"></div>
+
+<div class="settings" id="settings">
+  <h2>Connect to the API</h2>
+  <p>Address of the PathSnap API on Laptop 1.</p>
+  <div class="row">
+    <input id="api" type="text" spellcheck="false" placeholder="http://192.168.x.x:8000">
+    <button class="btn" id="connect">Connect</button>
+  </div>
+  <div class="status"><span class="dot" id="dot"></span><span id="status">Not connected</span></div>
+</div>
+
+<div class="panel" id="panel">
+  <div class="head">
+    <h1 id="p-title">Trip</h1>
+    <div class="meta" id="p-meta"></div>
+  </div>
+  <div class="actions">
+    <button class="act primary" id="a-run"><span class="c">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.71 11.29l-9-9a.996.996 0 00-1.41 0l-9 9a.996.996 0 000 1.41l9 9c.39.39 1.02.39 1.41 0l9-9a.996.996 0 000-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>
+      </span>Match route</button>
+    <button class="act" id="a-start" disabled><span class="c">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="7"/></svg></span>Start</button>
+    <button class="act" id="a-end" disabled><span class="c">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></span>End</button>
+    <button class="act" id="a-fit" disabled><span class="c">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2zm2 10H3v4c0 1.1.9 2 2 2h4v-2H5v-4zm14 4h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zm0-16h-4v2h4v4h2V5c0-1.1-.9-2-2-2z"/></svg></span>Whole route</button>
+  </div>
+  <div class="body" id="p-body"><div class="placeholder">Press <b>Match route</b> to send this trip to the API.</div></div>
+</div>
+
+<div class="layers" id="layers">Satellite</div>
+
+<div class="ctrl">
+  <button class="round" id="c-fit" title="Fit route">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.94 3A8.99 8.99 0 0013 3.06V1h-2v2.06A8.99 8.99 0 003.06 11H1v2h2.06A8.99 8.99 0 0011 20.94V23h2v-2.06A8.99 8.99 0 0020.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+  </button>
+  <div class="zoom">
+    <button id="zin" title="Zoom in"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button>
+    <button id="zout" title="Zoom out"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13H5v-2h14v2z"/></svg></button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } },
+};
+const params = new URLSearchParams(location.search);
+$("api").value = params.get("api") || store.get("pathsnap_api") || "http://localhost:8000";
+const apiBase = () => $("api").value.trim().replace(/\/+$/, "");
+const pct = (x, d = 1) => (x == null || isNaN(x) ? "–" : (x * 100).toFixed(d) + "%");
+
+let tripIds = [], selected = null, last = null, satellite = false;
+const scores = {}, logRows = [];
+
+// ---------- map ----------
+const map = L.map("map", { zoomControl: false, preferCanvas: true }).setView([25, 10], 3);
+const street = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  { maxZoom: 19, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
+const sat = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  { maxZoom: 19, attribution: "Imagery &copy; Esri" });
+const gpsLayer = L.layerGroup().addTo(map), routeLayer = L.layerGroup().addTo(map), pinLayer = L.layerGroup().addTo(map);
+
+const startIcon = L.divIcon({ className: "", html: '<div class="start-dot"></div>', iconSize: [18, 18], iconAnchor: [9, 9] });
+const endIcon = L.divIcon({ className: "", iconSize: [27, 43], iconAnchor: [13.5, 42], popupAnchor: [0, -38],
+  html: '<svg width="27" height="43" viewBox="0 0 27 43"><path d="M13.5 1C6.6 1 1 6.6 1 13.5 1 23.5 13.5 42 13.5 42S26 23.5 26 13.5C26 6.6 20.4 1 13.5 1z" fill="#ea4335" stroke="#b31412" stroke-width="1.5"/><circle cx="13.5" cy="13.5" r="4.6" fill="#b31412"/></svg>' });
+
+$("zin").onclick = () => map.zoomIn();
+$("zout").onclick = () => map.zoomOut();
+$("layers").onclick = () => {
+  satellite = !satellite;
+  if (satellite) { map.removeLayer(street); sat.addTo(map); } else { map.removeLayer(sat); street.addTo(map); }
+  $("layers").textContent = satellite ? "Map" : "Satellite";
+  $("layers").classList.toggle("sat", satellite);
+};
+const fitRoute = () => { if (last) map.fitBounds(L.latLngBounds(last.gps.concat([last.start, last.end])), { padding: [60, 60], paddingTopLeft: [430, 80] }); };
+$("c-fit").onclick = fitRoute; $("a-fit").onclick = fitRoute;
+$("a-start").onclick = () => last && map.setView(last.start, 18);
+$("a-end").onclick = () => last && map.setView(last.end, 18);
+
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.style.display = "block";
+  clearTimeout(toast._t); toast._t = setTimeout(() => (t.style.display = "none"), 3000);
+}
+
+// ---------- settings ----------
+$("menu").onclick = () => $("settings").classList.toggle("open");
+function setStatus(state, text) { $("dot").className = "dot " + state; $("status").textContent = text; }
+
+async function connect() {
+  setStatus("", "Connecting…");
+  store.set("pathsnap_api", apiBase());
+  try {
+    const r = await fetch(`${apiBase()}/trips`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    tripIds = (await r.json()).trips;
+    setStatus("ok", `Connected · ${tripIds.length} trips`);
+    $("settings").classList.remove("open");
+    renderChips();
+    toast(`Connected to ${apiBase()}`);
+  } catch (e) {
+    setStatus("err", `Cannot reach the API (${e.message})`);
+    $("settings").classList.add("open");
+  }
+}
+$("connect").onclick = connect;
+$("api").addEventListener("keydown", (e) => { if (e.key === "Enter") connect(); });
+
+// ---------- trip selection ----------
+function renderChips() {
+  const box = $("chips"); box.innerHTML = "";
+  tripIds.forEach((id) => {
+    const c = document.createElement("button");
+    c.className = "chip" + (id === selected ? " sel" : "");
+    c.append(document.createTextNode(`Trip ${id}`));
+    if (scores[id] != null) { const a = document.createElement("span"); a.className = "acc"; a.textContent = pct(scores[id]); c.append(a); }
+    c.onclick = () => selectTrip(id);
+    box.appendChild(c);
+  });
+}
+
+function renderSuggest(filter = "") {
+  const box = $("suggest"); box.innerHTML = "";
+  const f = filter.trim();
+  const list = tripIds.filter((id) => id.includes(f));
+  list.forEach((id) => {
+    const b = document.createElement("button");
+    const ico = document.createElement("span"); ico.className = "ico";
+    ico.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>';
+    const txt = document.createElement("span");
+    txt.textContent = `Trip ${id}`;
+    const sm = document.createElement("small");
+    sm.textContent = scores[id] != null ? `Matched · ${pct(scores[id])} accuracy` : "Evaluation trip";
+    txt.appendChild(sm);
+    b.append(ico, txt);
+    b.onmousedown = (e) => { e.preventDefault(); selectTrip(id); $("suggest").classList.remove("open"); };
+    box.appendChild(b);
+  });
+  if (!list.length) box.innerHTML = '<div class="placeholder">No matching trip</div>';
+  box.classList.add("open");
+}
+$("q").addEventListener("focus", () => renderSuggest($("q").value.replace(/^Trip\s*/i, "")));
+$("q").addEventListener("input", () => renderSuggest($("q").value.replace(/^Trip\s*/i, "")));
+$("q").addEventListener("blur", () => setTimeout(() => $("suggest").classList.remove("open"), 120));
+$("q").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    const f = $("q").value.replace(/^Trip\s*/i, "").trim();
+    const hit = tripIds.find((id) => id === f) || tripIds.find((id) => id.includes(f));
+    if (hit) { selectTrip(hit); $("suggest").classList.remove("open"); run(); }
+  }
+});
+$("go").onclick = () => { if (selected) run(); else $("q").focus(); };
+$("dir").onclick = () => { if (selected) run(); else toast("Choose a trip first"); };
+$("a-run").onclick = () => run();
+
+function selectTrip(id) {
+  selected = id;
+  $("suggest").classList.remove("open");
+  $("q").blur();
+  $("q").value = `Trip ${id}`;
+  $("panel").classList.add("open");
+  $("p-title").textContent = `Trip ${id}`;
+  $("p-meta").textContent = "Evaluation trip · ready to match";
+  if (!(last && last.trip_id === id)) {
+    $("p-body").innerHTML = '<div class="placeholder">Press <b>Match route</b> to send this trip to the API.</div>';
+    ["a-start", "a-end", "a-fit"].forEach((k) => ($(k).disabled = true));
+  }
+  renderChips();
+}
+
+// ---------- prediction ----------
+async function run() {
+  if (!selected) { toast("Choose a trip first"); return; }
+  const trip = selected;
+  $("loading").style.display = "block";
+  $("p-meta").textContent = "Matching route…";
+  const t0 = performance.now();
+  try {
+    const r = await fetch(`${apiBase()}/predict`, { method: "POST",
+      headers: { "Content-Type": "application/json" }, body: JSON.stringify({ trip_id: trip }) });
+    const rt = (performance.now() - t0) / 1000;
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const res = await r.json();
+    logRows.unshift({ time: new Date().toLocaleTimeString(), trip, ok: true, info: `200 · ${rt.toFixed(2)} s` });
+    show(res, rt);
+  } catch (e) {
+    logRows.unshift({ time: new Date().toLocaleTimeString(), trip, ok: false, info: e.message });
+    $("p-meta").textContent = "Request failed";
+    toast(`Request failed: ${e.message}`);
+  } finally {
+    $("loading").style.display = "none";
+  }
+}
+
+function item(icon, label, value) {
+  return `<div class="item"><div class="ic">${icon}</div><div><div class="k">${label}</div><div class="v">${value}</div></div></div>`;
+}
+const I = {
+  clf: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>',
+  link: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 000 10h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 000-10z"/></svg>',
+  pts: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="12" r="2.5"/><circle cx="12" cy="7" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="12" cy="17" r="2.5"/></svg>',
+  road: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11 3h2v4h-2zm0 7h2v4h-2zm0 7h2v4h-2zM4 3h2l2 18H6zm14 0h2l-2 18h-2z"/></svg>',
+  time: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>',
+};
+
+function show(res, rt) {
+  last = res;
+  const m = res.metrics;
+  if (m) scores[res.trip_id] = m.accuracy_hmm;
+  const nArcs = res.predicted_route_segments.length;
+  $("p-title").textContent = `Trip ${res.trip_id}`;
+  $("p-meta").textContent = `${res.n_gps_points ?? res.gps.length} GPS points · ${nArcs} road segments`;
+  ["a-start", "a-end", "a-fit"].forEach((k) => ($(k).disabled = false));
+
+  let html = "";
+  if (m) {
+    const d = (m.accuracy_hmm - m.accuracy_clf) * 100;
+    html += `<div class="summary"><span class="big">${pct(m.accuracy_hmm, 2)}</span><span class="lbl">matched correctly</span>
+      <span class="delta">${d >= 0 ? "+" : ""}${d.toFixed(1)} pts with HMM</span></div>`;
+    html += item(I.clf, "Classifier only (before HMM)", pct(m.accuracy_clf, 2));
+    html += item(I.link, "Route continuity", `${pct(m.continuity_hmm)} <span style="color:var(--sub);font-size:13px">(classifier only ${pct(m.continuity_clf)})</span>`);
+    html += item(I.pts, "GPS points scored", `${m.n_scored_points.toLocaleString()} of ${m.n_points.toLocaleString()}`);
+    html += item(I.road, "Route segments found", `${pct(m.route_arc_recall)} recall · ${pct(m.route_arc_precision)} precision`);
+  } else {
+    html += '<div class="placeholder">No reference route on the server for this trip.</div>';
+  }
+  html += item(I.time, "Processing time", `${res.runtime_s.toFixed(2)} s on server · ${rt.toFixed(2)} s round trip`);
+  html += `<div class="section-title">Route</div><div class="timeline">
+    <div class="tl"><span class="mk" style="background:#fff;border:4px solid #202124"></span><div><div class="t1">Start</div>
+      <div class="t2">${res.start[0].toFixed(5)}, ${res.start[1].toFixed(5)}</div></div></div>
+    <div class="tl"><span class="mk" style="background:var(--route)"></span><div><div class="t1">${nArcs} road segments matched</div>
+      <div class="t2">${res.hmm_chain_breaks} chain break${res.hmm_chain_breaks === 1 ? "" : "s"} in the Viterbi path</div></div></div>
+    <div class="tl"><span class="mk" style="background:var(--red)"></span><div><div class="t1">End</div>
+      <div class="t2">${res.end[0].toFixed(5)}, ${res.end[1].toFixed(5)}</div></div></div></div>`;
+  html += `<div class="section-title">Request log</div><div class="log">` +
+    logRows.slice(0, 8).map((l) => `<div><span>${l.time} · POST /predict ${l.trip}</span><span class="${l.ok ? "ok" : "bad"}">${String(l.info).replace(/</g, "&lt;")}</span></div>`).join("") +
+    `</div>`;
+  $("p-body").innerHTML = html;
+  renderChips();
+
+  gpsLayer.clearLayers(); routeLayer.clearLayers(); pinLayer.clearLayers();
+  res.gps.forEach((p) => L.circleMarker(p, { radius: 2.2, color: "#5f6368", weight: 0, fillOpacity: 0.45 }).addTo(gpsLayer));
+  const segs = res.predicted_route_segments;
+  L.polyline(segs, { color: "#1559c7", weight: 9, opacity: 1, lineCap: "round", lineJoin: "round" }).addTo(routeLayer);
+  L.polyline(segs, { color: "#4a8af4", weight: 6, opacity: 1, lineCap: "round", lineJoin: "round" }).addTo(routeLayer);
+  L.marker(res.start, { icon: startIcon, zIndexOffset: 900 }).bindTooltip("Start").addTo(pinLayer);
+  L.marker(res.end, { icon: endIcon, zIndexOffset: 1000 }).bindTooltip("End").addTo(pinLayer);
+  fitRoute();
+}
+
+connect();
+</script>
+</body>
+</html>

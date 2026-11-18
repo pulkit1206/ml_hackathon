@@ -22,7 +22,7 @@ PathSnap/
 │   └── maps.py           Folium maps
 ├── scripts/              experiments (run from PathSnap/)
 ├── api/main.py           FastAPI backend (Laptop 1)
-├── ui/app.py             Streamlit evaluator UI (Laptop 2)
+├── ui/web/index.html     map-style evaluator UI (Laptop 2); ui/web/console.html = dark console; ui/app.py = Streamlit
 ├── artifacts/            final model, feature list, best hyper-parameters, HMM parameters
 ├── results/
 │   ├── eda/, labels/     outputs of the notebooks
@@ -99,15 +99,22 @@ uvicorn api.main:app --host 0.0.0.0 --port 8000
 
 Find its IP address (macOS: `ipconfig getifaddr en0`). Every request is logged in this terminal.
 
-**Laptop 2 – UI:**
+**Laptop 2 – UI** (web console, recommended):
 
 ```bash
-cd PathSnap && source venv/bin/activate
-PATHSNAP_API=http://<laptop-1-ip>:8000 streamlit run ui/app.py
+cd PathSnap
+python3 -m http.server 8501 --directory ui/web
 ```
 
-The UI lists the trips, sends the selected trip id to `POST /predict`, and displays the predicted route and
-the metrics. Reference routes never leave Laptop 1. They are read only after prediction, to compute accuracy.
+Open `http://localhost:8501/?api=http://<laptop-1-ip>:8000` in a browser (or type the API address in the
+sidebar and press Connect). Pick a trip and press **Run map-matching**. The map shows the GPS observations,
+the predicted route, a start marker and a red end pin, with accuracy metrics and a request log in the side panel. `console.html` is an alternative dark layout.
+Leaflet is bundled in `ui/web/vendor/`. Only the map tiles need internet.
+
+Alternative Streamlit UI: `PATHSNAP_API=http://<laptop-1-ip>:8000 streamlit run ui/app.py`
+
+The UI only sends the selected trip id to `POST /predict` and displays the response. Reference routes never
+leave Laptop 1. They are read only after prediction, to compute accuracy.
 
 ## Notes
 

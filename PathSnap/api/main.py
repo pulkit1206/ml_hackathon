@@ -89,6 +89,9 @@ def predict(req: PredictRequest):
     out = {
         "trip_id": req.trip_id,
         "gps": tr[["lat", "lon"]].to_numpy()[::step].round(7).tolist(),
+        "start": [float(tr.lat.iloc[0]), float(tr.lon.iloc[0])],          # first GPS fix
+        "end": [float(tr.lat.iloc[-1]), float(tr.lon.iloc[-1])],          # last GPS fix
+        "n_gps_points": int(len(tr)),
         "predicted_route_segments": segments,
         "predicted_arc_per_point": result["pred_hmm"].tolist(),
         "metrics": metrics,
