@@ -1,0 +1,12 @@
+partition,trip_id,error_type,error_message
+train,00000002,ValueError,"00000002: route has 1 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
+train,00000019,ValueError,"00000019: route has 3 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
+train,00000033,ValueError,"00000033: route has 1 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
+train,00000041,ValueError,"00000041: route has 1 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
+train,00000042,ValueError,"00000042: route has 1 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
+train,00000069,ValueError,"00000069: route has 1 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
+train,00000075,ValueError,"00000075: route has 2 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
+train,00000080,ValueError,"00000080: route has 1 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
+train,00000086,ValueError,"00000086: route has 1 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
+train,00000089,ValueError,"00000089: route has 1 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
+student_test,00000076,ValueError,"00000076: route has 1 consecutive-arc continuity break(s). Inspect the route before labeling. If the dataset documentation permits this, set STRICT_ROUTE_CONTINUITY=False and clearly report the issue."
