@@ -5,7 +5,7 @@ nearby road arcs, and an HMM decoded with the Viterbi algorithm turns those scor
 The trained system runs behind a FastAPI backend (Laptop 1). A Streamlit UI (Laptop 2) sends it a trip id
 and shows the predicted route and the accuracy computed on the server.
 
-## Repository layout
+## Repository layout ##
 
 ```
 PathSnap/
