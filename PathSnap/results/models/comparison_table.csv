@@ -1,0 +1,7 @@
+model,family,n_features,cv_macro_f1_mean,cv_top1_mean,cv_top1_std,cv_train_top1_mean,test_top1,test_accuracy,test_precision,test_recall,test_macro_f1,test_log_loss,train_time_s,inference_ms_per_1k_rows
+LogisticRegression,Linear,9,0.7949,0.8311,0.0152,0.8296,0.8459,0.9034,0.4858,0.945,0.7929,0.2093,2.8553,0.0397
+KNN,Instance-based,9,0.8917,0.8248,0.0185,0.9943,0.8436,0.9691,0.8497,0.8048,0.9048,0.106,0.1173,46.1818
+RandomForest,Ensemble (bagging),9,0.8991,0.8417,0.0205,0.9099,0.8596,0.9653,0.75,0.9309,0.9057,0.0881,162.8102,2.0566
+LightGBM,Boosting,9,0.8719,0.8415,0.0187,0.87,0.8581,0.9517,0.6627,0.9611,0.8786,0.1185,15.1159,5.6462
+MLP,Neural network,9,0.9041,0.839,0.02,0.8482,0.8523,0.9723,0.8655,0.8256,0.9149,0.0696,16.259,0.3654
+LightGBM_tuned,Boosting,9,0.908,0.843,0.0194,0.8607,0.8567,0.9731,0.8664,0.8355,0.918,0.0661,9.8299,3.0933

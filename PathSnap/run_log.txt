@@ -1,0 +1,292 @@
+== 1/10 candidate dataset
+train 00000001: 1315 pts, 15958 rows, miss=0.000, labels=team_notebook
+train 00000002: 7243 pts, 81572 rows, miss=0.023, labels=pipeline_alignment
+train 00000003: 821 pts, 20041 rows, miss=0.000, labels=team_notebook
+train 00000004: 1064 pts, 8028 rows, miss=0.000, labels=team_notebook
+train 00000005: 1045 pts, 3132 rows, miss=0.000, labels=team_notebook
+train 00000006: 1450 pts, 16418 rows, miss=0.000, labels=team_notebook
+train 00000008: 3093 pts, 40610 rows, miss=0.007, labels=team_notebook
+train 00000010: 2711 pts, 49115 rows, miss=0.000, labels=team_notebook
+train 00000011: 2828 pts, 17865 rows, miss=0.000, labels=team_notebook
+train 00000012: 1608 pts, 6466 rows, miss=0.000, labels=team_notebook
+train 00000013: 2580 pts, 24524 rows, miss=0.000, labels=team_notebook
+train 00000014: 448 pts, 7603 rows, miss=0.000, labels=team_notebook
+train 00000016: 1305 pts, 25514 rows, miss=0.000, labels=team_notebook
+train 00000018: 379 pts, 6809 rows, miss=0.000, labels=team_notebook
+train 00000019: 2354 pts, 28955 rows, miss=0.008, labels=pipeline_alignment
+train 00000020: 2353 pts, 9040 rows, miss=0.008, labels=team_notebook
+train 00000021: 15783 pts, 50590 rows, miss=0.001, labels=team_notebook
+train 00000022: 474 pts, 9711 rows, miss=0.000, labels=team_notebook
+train 00000024: 801 pts, 6096 rows, miss=0.000, labels=team_notebook
+train 00000025: 1179 pts, 12569 rows, miss=0.000, labels=team_notebook
+train 00000026: 361 pts, 4065 rows, miss=0.000, labels=team_notebook
+train 00000027: 694 pts, 5526 rows, miss=0.000, labels=team_notebook
+train 00000028: 3565 pts, 26128 rows, miss=0.004, labels=team_notebook
+train 00000029: 733 pts, 12501 rows, miss=0.000, labels=team_notebook
+train 00000031: 4245 pts, 39823 rows, miss=0.000, labels=team_notebook
+train 00000032: 2464 pts, 19877 rows, miss=0.000, labels=team_notebook
+train 00000033: 5844 pts, 45610 rows, miss=0.164, labels=pipeline_alignment
+train 00000034: 3614 pts, 32643 rows, miss=0.000, labels=team_notebook
+train 00000035: 1643 pts, 27494 rows, miss=0.000, labels=team_notebook
+train 00000036: 1368 pts, 14928 rows, miss=0.000, labels=team_notebook
+train 00000037: 677 pts, 8373 rows, miss=0.000, labels=team_notebook
+train 00000038: 1287 pts, 17113 rows, miss=0.000, labels=team_notebook
+train 00000039: 363 pts, 2567 rows, miss=0.000, labels=team_notebook
+train 00000041: 1019 pts, 13391 rows, miss=0.000, labels=pipeline_alignment
+train 00000042: 7739 pts, 72751 rows, miss=0.000, labels=pipeline_alignment
+train 00000043: 2322 pts, 22572 rows, miss=0.047, labels=team_notebook
+train 00000044: 546 pts, 5984 rows, miss=0.000, labels=team_notebook
+train 00000045: 640 pts, 4028 rows, miss=0.000, labels=team_notebook
+train 00000046: 1401 pts, 7964 rows, miss=0.000, labels=team_notebook
+train 00000047: 1272 pts, 15683 rows, miss=0.000, labels=team_notebook
+train 00000048: 1240 pts, 9676 rows, miss=0.000, labels=team_notebook
+train 00000050: 518 pts, 4510 rows, miss=0.000, labels=team_notebook
+train 00000051: 984 pts, 10613 rows, miss=0.000, labels=team_notebook
+train 00000053: 1304 pts, 23388 rows, miss=0.000, labels=team_notebook
+train 00000054: 19313 pts, 43881 rows, miss=0.287, labels=team_notebook
+train 00000055: 2472 pts, 14184 rows, miss=0.000, labels=team_notebook
+train 00000057: 1645 pts, 17129 rows, miss=0.008, labels=team_notebook
+train 00000058: 599 pts, 24687 rows, miss=0.000, labels=team_notebook
+train 00000060: 854 pts, 17138 rows, miss=0.000, labels=team_notebook
+train 00000061: 1430 pts, 54667 rows, miss=0.008, labels=team_notebook
+train 00000062: 3378 pts, 39907 rows, miss=0.000, labels=team_notebook
+train 00000063: 2781 pts, 27178 rows, miss=0.000, labels=team_notebook
+train 00000064: 2093 pts, 18869 rows, miss=0.000, labels=team_notebook
+train 00000066: 4325 pts, 14603 rows, miss=0.047, labels=team_notebook
+train 00000068: 747 pts, 8312 rows, miss=0.000, labels=team_notebook
+train 00000069: 2067 pts, 30827 rows, miss=0.000, labels=pipeline_alignment
+train 00000070: 2076 pts, 18570 rows, miss=0.000, labels=team_notebook
+train 00000071: 850 pts, 7660 rows, miss=0.000, labels=team_notebook
+train 00000072: 969 pts, 19532 rows, miss=0.000, labels=team_notebook
+train 00000074: 1929 pts, 21767 rows, miss=0.000, labels=team_notebook
+train 00000075: 1628 pts, 12992 rows, miss=0.000, labels=pipeline_alignment
+train 00000078: 2909 pts, 29346 rows, miss=0.002, labels=team_notebook
+train 00000079: 689 pts, 14407 rows, miss=0.000, labels=team_notebook
+train 00000080: 2510 pts, 13666 rows, miss=0.000, labels=pipeline_alignment
+train 00000081: 3224 pts, 26143 rows, miss=0.025, labels=team_notebook
+train 00000082: 4268 pts, 37283 rows, miss=0.000, labels=team_notebook
+train 00000083: 1507 pts, 21794 rows, miss=0.000, labels=team_notebook
+train 00000084: 16031 pts, 92696 rows, miss=0.037, labels=team_notebook
+train 00000085: 1092 pts, 8126 rows, miss=0.010, labels=team_notebook
+train 00000086: 4143 pts, 20117 rows, miss=0.000, labels=pipeline_alignment
+train 00000088: 876 pts, 19305 rows, miss=0.000, labels=team_notebook
+train 00000089: 1228 pts, 29920 rows, miss=0.000, labels=pipeline_alignment
+train 00000090: 536 pts, 8544 rows, miss=0.000, labels=team_notebook
+train 00000092: 7892 pts, 85769 rows, miss=0.000, labels=team_notebook
+train 00000093: 1211 pts, 27521 rows, miss=0.007, labels=team_notebook
+train 00000095: 1551 pts, 21091 rows, miss=0.000, labels=team_notebook
+train 00000096: 3271 pts, 28014 rows, miss=0.041, labels=team_notebook
+train 00000097: 1740 pts, 14588 rows, miss=0.000, labels=team_notebook
+train 00000098: 5584 pts, 34596 rows, miss=0.003, labels=team_notebook
+train 00000099: 2322 pts, 33456 rows, miss=0.014, labels=team_notebook
+
+== train: trips=80 rows=1,846,109 positive share=0.100 candidate miss rate=0.0145 (radius 50 m)
+
+student_test 00000000: 2503 pts, 13670 rows, miss=0.000, labels=team_notebook
+student_test 00000007: 1354 pts, 5010 rows, miss=0.000, labels=team_notebook
+student_test 00000009: 1049 pts, 20758 rows, miss=0.000, labels=team_notebook
+student_test 00000040: 2995 pts, 16279 rows, miss=0.000, labels=team_notebook
+student_test 00000052: 262 pts, 2447 rows, miss=0.000, labels=team_notebook
+student_test 00000056: 3958 pts, 48946 rows, miss=0.003, labels=team_notebook
+student_test 00000065: 768 pts, 10796 rows, miss=0.000, labels=team_notebook
+student_test 00000076: 1486 pts, 29186 rows, miss=0.000, labels=pipeline_alignment
+student_test 00000077: 3911 pts, 47990 rows, miss=0.000, labels=team_notebook
+student_test 00000091: 874 pts, 13918 rows, miss=0.000, labels=team_notebook
+
+== student_test: trips=10 rows=209,000 positive share=0.092 candidate miss rate=0.0005 (radius 50 m)
+
+== 2/10 feature importance
+fold 0: base top1 = 0.8237
+fold 1: base top1 = 0.8618
+fold 2: base top1 = 0.8384
+          feature  perm_top1_drop_mean  perm_top1_drop_std  lgbm_gain_share  selected
+     heading_diff             0.349022            0.018134         0.101290      True
+   dist_minus_min             0.120216            0.008324         0.299439      True
+        proj_frac             0.058704            0.009117         0.052917      True
+             dist             0.016639            0.011859         0.015161      True
+            speed             0.013182            0.004370         0.057492      True
+conn_prev_nearest             0.005856            0.001076         0.004237      True
+        dist_rank             0.003338            0.001001         0.402098      True
+          arc_len             0.001727            0.000483         0.043264      True
+          n_cands             0.001217            0.001919         0.023031      True
+         time_gap             0.000065            0.000101         0.001070     False
+
+selected: ['heading_diff', 'dist_minus_min', 'proj_frac', 'dist', 'speed', 'conn_prev_nearest', 'dist_rank', 'arc_len', 'n_cands']
+== 3/10 five models
+train: 1,846,109 rows / 80 trips | test: 209,000 rows / 10 trips | features (9): ['heading_diff', 'dist_minus_min', 'proj_frac', 'dist', 'speed', 'conn_prev_nearest', 'dist_rank', 'arc_len', 'n_cands']
+
+  [LogisticRegression] fold 0: val top1=0.8180 macroF1=0.7817 (train top1=0.8380)
+  [LogisticRegression] fold 1: val top1=0.8477 macroF1=0.8101 (train top1=0.8210)
+  [LogisticRegression] fold 2: val top1=0.8276 macroF1=0.7929 (train top1=0.8297)
+==> LogisticRegression: CV top1=0.8311±0.0152 | test top1=0.8459 macroF1=0.7929 logloss=0.2093
+
+  [KNN] fold 0: val top1=0.8077 macroF1=0.8835 (train top1=0.9954)
+  [KNN] fold 1: val top1=0.8444 macroF1=0.8977 (train top1=0.9929)
+  [KNN] fold 2: val top1=0.8224 macroF1=0.8940 (train top1=0.9946)
+==> KNN: CV top1=0.8248±0.0185 | test top1=0.8436 macroF1=0.9048 logloss=0.1060
+
+  [RandomForest] fold 0: val top1=0.8229 macroF1=0.8813 (train top1=0.9146)
+  [RandomForest] fold 1: val top1=0.8636 macroF1=0.9142 (train top1=0.9004)
+  [RandomForest] fold 2: val top1=0.8387 macroF1=0.9017 (train top1=0.9147)
+==> RandomForest: CV top1=0.8417±0.0205 | test top1=0.8596 macroF1=0.9057 logloss=0.0881
+
+  [LightGBM] fold 0: val top1=0.8247 macroF1=0.8504 (train top1=0.8743)
+  [LightGBM] fold 1: val top1=0.8616 macroF1=0.8893 (train top1=0.8626)
+  [LightGBM] fold 2: val top1=0.8384 macroF1=0.8759 (train top1=0.8732)
+==> LightGBM: CV top1=0.8415±0.0187 | test top1=0.8581 macroF1=0.8786 logloss=0.1185
+
+  [MLP] fold 0: val top1=0.8213 macroF1=0.8946 (train top1=0.8575)
+  [MLP] fold 1: val top1=0.8607 macroF1=0.9088 (train top1=0.8403)
+  [MLP] fold 2: val top1=0.8349 macroF1=0.9088 (train top1=0.8467)
+==> MLP: CV top1=0.8390±0.0200 | test top1=0.8523 macroF1=0.9149 logloss=0.0696
+
+== 4/10 LightGBM loss curves
+best validation round: 29 (loss 0.1774); final train 0.1059 vs validation 0.1953
+== 5/10 Optuna (Bayesian) tuning
+[I 2026-11-18 15:25:21,102] A new study created in RDB with name: lgbm_top1
+[I 2026-11-18 15:26:12,780] Trial 0 finished with value: 0.841427005520872 and parameters: {'num_leaves': 31, 'max_depth': 16, 'min_child_samples': 20, 'learning_rate': 0.05, 'n_estimators': 400, 'subsample': 1.0, 'colsample_bytree': 1.0, 'reg_lambda': 0.001, 'is_unbalance': True}. Best is trial 0 with value: 0.841427005520872.
+[I 2026-11-18 15:26:50,045] Trial 1 finished with value: 0.8427591219824685 and parameters: {'num_leaves': 42, 'max_depth': 16, 'min_child_samples': 119, 'learning_rate': 0.10118287286592736, 'n_estimators': 200, 'subsample': 0.5779972601681014, 'colsample_bytree': 0.5290418060840998, 'reg_lambda': 2.915443189153755, 'is_unbalance': False}. Best is trial 1 with value: 0.8427591219824685.
+[I 2026-11-18 15:27:15,647] Trial 2 finished with value: 0.8403478528598863 and parameters: {'num_leaves': 15, 'max_depth': 16, 'min_child_samples': 168, 'learning_rate': 0.035543498097189236, 'n_estimators': 200, 'subsample': 0.5917022549267169, 'colsample_bytree': 0.6521211214797689, 'reg_lambda': 0.12561043700013563, 'is_unbalance': True}. Best is trial 1 with value: 0.8427591219824685.
+[I 2026-11-18 15:28:05,622] Trial 3 finished with value: 0.8423682098883641 and parameters: {'num_leaves': 84, 'max_depth': 5, 'min_child_samples': 26, 'learning_rate': 0.05393925667147035, 'n_estimators': 400, 'subsample': 0.8925879806965068, 'colsample_bytree': 0.5998368910791798, 'reg_lambda': 0.11400863701127326, 'is_unbalance': True}. Best is trial 1 with value: 0.8427591219824685.
+[I 2026-11-18 15:29:48,288] Trial 4 finished with value: 0.7742747230676609 and parameters: {'num_leaves': 83, 'max_depth': 6, 'min_child_samples': 12, 'learning_rate': 0.26121973339547316, 'n_estimators': 800, 'subsample': 0.9041986740582306, 'colsample_bytree': 0.6523068845866853, 'reg_lambda': 0.002458603276328005, 'is_unbalance': True}. Best is trial 1 with value: 0.8427591219824685.
+[I 2026-11-18 15:30:15,116] Trial 5 finished with value: 0.8391842044267334 and parameters: {'num_leaves': 21, 'max_depth': 10, 'min_child_samples': 11, 'learning_rate': 0.23467875319825227, 'n_estimators': 250, 'subsample': 0.831261142176991, 'colsample_bytree': 0.6558555380447055, 'reg_lambda': 0.12030178871154672, 'is_unbalance': True}. Best is trial 1 with value: 0.8427591219824685.
+[I 2026-11-18 15:32:23,886] Trial 6 finished with value: 0.8371198074850325 and parameters: {'num_leaves': 234, 'max_depth': 14, 'min_child_samples': 244, 'learning_rate': 0.2256465100244266, 'n_estimators': 500, 'subsample': 0.9609371175115584, 'colsample_bytree': 0.5442462510259598, 'reg_lambda': 0.006080390190296602, 'is_unbalance': False}. Best is trial 1 with value: 0.8427591219824685.
+[I 2026-11-18 15:33:01,987] Trial 7 finished with value: 0.8427632227617455 and parameters: {'num_leaves': 44, 'max_depth': 7, 'min_child_samples': 166, 'learning_rate': 0.05255384124729447, 'n_estimators': 300, 'subsample': 0.7713480415791243, 'colsample_bytree': 0.5704621124873813, 'reg_lambda': 1.6172900811143147, 'is_unbalance': False}. Best is trial 7 with value: 0.8427632227617455.
+[I 2026-11-18 15:33:25,394] Trial 8 pruned. 
+[I 2026-11-18 15:34:30,831] Trial 9 finished with value: 0.842098329896332 and parameters: {'num_leaves': 173, 'max_depth': 12, 'min_child_samples': 30, 'learning_rate': 0.023756388334765528, 'n_estimators': 300, 'subsample': 0.6625916610133735, 'colsample_bytree': 0.864803089169032, 'reg_lambda': 0.3550012525851162, 'is_unbalance': True}. Best is trial 7 with value: 0.8427632227617455.
+[I 2026-11-18 15:34:54,354] Trial 10 finished with value: 0.8416434705488914 and parameters: {'num_leaves': 16, 'max_depth': 10, 'min_child_samples': 167, 'learning_rate': 0.020311966755787163, 'n_estimators': 250, 'subsample': 0.6794601999006274, 'colsample_bytree': 0.7442183894521344, 'reg_lambda': 4.384942490847977, 'is_unbalance': False}. Best is trial 7 with value: 0.8427632227617455.
+[I 2026-11-18 15:35:25,117] Trial 11 finished with value: 0.8418936349249694 and parameters: {'num_leaves': 42, 'max_depth': 4, 'min_child_samples': 213, 'learning_rate': 0.04455282848492544, 'n_estimators': 350, 'subsample': 0.7728389127082507, 'colsample_bytree': 0.6202235038072497, 'reg_lambda': 3.0892036150748914, 'is_unbalance': False}. Best is trial 7 with value: 0.8427632227617455.
+[I 2026-11-18 15:35:47,065] Trial 12 finished with value: 0.8426020842130469 and parameters: {'num_leaves': 24, 'max_depth': 9, 'min_child_samples': 64, 'learning_rate': 0.07579625041712719, 'n_estimators': 200, 'subsample': 0.6308893884539266, 'colsample_bytree': 0.5672571475811332, 'reg_lambda': 0.22234608284834675, 'is_unbalance': False}. Best is trial 7 with value: 0.8427632227617455.
+[I 2026-11-18 15:35:58,311] Trial 13 pruned. 
+[I 2026-11-18 15:36:16,588] Trial 14 finished with value: 0.8426124354138468 and parameters: {'num_leaves': 28, 'max_depth': 16, 'min_child_samples': 120, 'learning_rate': 0.08162151730894383, 'n_estimators': 150, 'subsample': 0.6990224936173242, 'colsample_bytree': 0.5101056074676461, 'reg_lambda': 5.135112771194402, 'is_unbalance': False}. Best is trial 7 with value: 0.8427632227617455.
+[I 2026-11-18 15:36:36,549] Trial 15 pruned. 
+[I 2026-11-18 15:36:41,127] Trial 16 pruned. 
+[I 2026-11-18 15:37:02,068] Trial 17 finished with value: 0.8423515776064873 and parameters: {'num_leaves': 48, 'max_depth': 14, 'min_child_samples': 272, 'learning_rate': 0.0936601278550598, 'n_estimators': 150, 'subsample': 0.8328462769159424, 'colsample_bytree': 0.5020973913297854, 'reg_lambda': 0.33533337328103563, 'is_unbalance': False}. Best is trial 7 with value: 0.8427632227617455.
+[I 2026-11-18 15:37:20,562] Trial 18 finished with value: 0.8421273957704916 and parameters: {'num_leaves': 77, 'max_depth': 4, 'min_child_samples': 132, 'learning_rate': 0.08602785049979719, 'n_estimators': 200, 'subsample': 0.6287557056188896, 'colsample_bytree': 0.5062508662866436, 'reg_lambda': 1.7558195954557907, 'is_unbalance': False}. Best is trial 7 with value: 0.8427632227617455.
+[I 2026-11-18 15:37:32,390] Trial 19 pruned. 
+[I 2026-11-18 15:37:45,293] Trial 20 pruned. 
+[I 2026-11-18 15:38:13,955] Trial 21 finished with value: 0.8429809966526025 and parameters: {'num_leaves': 16, 'max_depth': 13, 'min_child_samples': 180, 'learning_rate': 0.0814538494638724, 'n_estimators': 250, 'subsample': 0.790270300291657, 'colsample_bytree': 0.5647875022861824, 'reg_lambda': 3.018292426417205, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:38:28,868] Trial 22 pruned. 
+[I 2026-11-18 15:39:02,826] Trial 23 finished with value: 0.8426805556852797 and parameters: {'num_leaves': 43, 'max_depth': 12, 'min_child_samples': 131, 'learning_rate': 0.05472917057524001, 'n_estimators': 250, 'subsample': 0.8770988624530637, 'colsample_bytree': 0.5614659358164269, 'reg_lambda': 6.4820750544480354, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:39:49,370] Trial 24 finished with value: 0.8427327835007462 and parameters: {'num_leaves': 41, 'max_depth': 11, 'min_child_samples': 155, 'learning_rate': 0.04995992380122837, 'n_estimators': 350, 'subsample': 0.7579514911858601, 'colsample_bytree': 0.509533739976442, 'reg_lambda': 1.1360359655826744, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:39:53,321] Trial 25 pruned. 
+[I 2026-11-18 15:40:20,789] Trial 26 finished with value: 0.8426773270720025 and parameters: {'num_leaves': 103, 'max_depth': 16, 'min_child_samples': 226, 'learning_rate': 0.12379598357789774, 'n_estimators': 150, 'subsample': 0.7258196813546661, 'colsample_bytree': 0.5390925026680554, 'reg_lambda': 2.0310245920541528, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:40:32,878] Trial 27 pruned. 
+[I 2026-11-18 15:40:42,157] Trial 28 pruned. 
+[I 2026-11-18 15:40:50,133] Trial 29 pruned. 
+[I 2026-11-18 15:41:12,451] Trial 30 finished with value: 0.8425016330373492 and parameters: {'num_leaves': 21, 'max_depth': 16, 'min_child_samples': 163, 'learning_rate': 0.06421843264471179, 'n_estimators': 200, 'subsample': 0.8796290424531712, 'colsample_bytree': 0.5228820613190586, 'reg_lambda': 1.0779805267043256, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:41:48,014] Trial 31 finished with value: 0.8425776702729345 and parameters: {'num_leaves': 32, 'max_depth': 14, 'min_child_samples': 165, 'learning_rate': 0.08705259995157144, 'n_estimators': 300, 'subsample': 0.7837808231325182, 'colsample_bytree': 0.5658568333583343, 'reg_lambda': 1.3617138828985296, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:42:19,934] Trial 32 finished with value: 0.8429282437251308 and parameters: {'num_leaves': 19, 'max_depth': 10, 'min_child_samples': 129, 'learning_rate': 0.05291477302806525, 'n_estimators': 300, 'subsample': 0.7935705133028842, 'colsample_bytree': 0.5177970395501018, 'reg_lambda': 1.1121062977514327, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:42:26,836] Trial 33 pruned. 
+[I 2026-11-18 15:43:04,394] Trial 34 finished with value: 0.8428319848292384 and parameters: {'num_leaves': 20, 'max_depth': 11, 'min_child_samples': 76, 'learning_rate': 0.03893487915445649, 'n_estimators': 350, 'subsample': 0.8689810754494933, 'colsample_bytree': 0.555862950726954, 'reg_lambda': 4.785048609486255, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:43:24,417] Trial 35 finished with value: 0.8425439414381505 and parameters: {'num_leaves': 16, 'max_depth': 11, 'min_child_samples': 133, 'learning_rate': 0.0678183109053272, 'n_estimators': 200, 'subsample': 0.7823819078623553, 'colsample_bytree': 0.5471495469026071, 'reg_lambda': 0.9136240988603319, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:44:03,117] Trial 36 finished with value: 0.8427830397319775 and parameters: {'num_leaves': 25, 'max_depth': 12, 'min_child_samples': 85, 'learning_rate': 0.04399899871147286, 'n_estimators': 350, 'subsample': 0.9002679705187289, 'colsample_bytree': 0.5539171321173558, 'reg_lambda': 0.545199566620287, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:44:34,529] Trial 37 finished with value: 0.8425560342990366 and parameters: {'num_leaves': 20, 'max_depth': 11, 'min_child_samples': 123, 'learning_rate': 0.057226095284208585, 'n_estimators': 300, 'subsample': 0.8804363376851543, 'colsample_bytree': 0.5719989335688915, 'reg_lambda': 2.847479848975544, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+[I 2026-11-18 15:44:45,501] Trial 38 pruned. 
+[I 2026-11-18 15:45:28,003] Trial 39 finished with value: 0.8428845293654029 and parameters: {'num_leaves': 26, 'max_depth': 12, 'min_child_samples': 47, 'learning_rate': 0.03982260199588465, 'n_estimators': 350, 'subsample': 0.9179876219161511, 'colsample_bytree': 0.5271660005132188, 'reg_lambda': 5.033393516285347, 'is_unbalance': False}. Best is trial 21 with value: 0.8429809966526025.
+
+best CV top1 0.8430 (trial 21); 20.1 min
+{
+  "num_leaves": 16,
+  "max_depth": 13,
+  "min_child_samples": 180,
+  "learning_rate": 0.0814538494638724,
+  "n_estimators": 250,
+  "subsample": 0.790270300291657,
+  "colsample_bytree": 0.5647875022861824,
+  "reg_lambda": 3.018292426417205,
+  "is_unbalance": false,
+  "subsample_freq": 1
+}
+== 6/10 tuned model + export
+  [LightGBM_tuned] fold 0: val top1=0.8259 macroF1=0.8984 (train top1=0.8673)
+  [LightGBM_tuned] fold 1: val top1=0.8641 macroF1=0.9136 (train top1=0.8520)
+  [LightGBM_tuned] fold 2: val top1=0.8389 macroF1=0.9119 (train top1=0.8627)
+==> LightGBM_tuned: CV top1=0.8430±0.0194 | test top1=0.8567 macroF1=0.9180 logloss=0.0661
+
+         model  cv_macro_f1_mean  cv_top1_mean  cv_top1_std  test_top1  test_macro_f1  test_log_loss  train_time_s  inference_ms_per_1k_rows
+      LightGBM          0.871905      0.841541     0.018653    0.85812       0.878613       0.118518     15.115864                  5.646164
+LightGBM_tuned          0.908002      0.842981     0.019431    0.85671       0.917952       0.066103      9.829862                  3.093305
+exported artifacts/final_model.joblib + feature_columns.json + model_info.json
+best validation round: 190 (loss 0.1120); final train 0.0597 vs validation 0.1125
+== 7/10 comparison plots
+                                family  n_features  cv_macro_f1_mean  cv_top1_mean  cv_top1_std  cv_train_top1_mean  test_top1  test_accuracy  test_precision  test_recall  test_macro_f1  test_log_loss  train_time_s  inference_ms_per_1k_rows
+model                                                                                                                                                                                                                                           
+LogisticRegression              Linear           9            0.7949        0.8311       0.0152              0.8296     0.8459         0.9034          0.4858       0.9450         0.7929         0.2093        2.8553                    0.0397
+KNN                     Instance-based           9            0.8917        0.8248       0.0185              0.9943     0.8436         0.9691          0.8497       0.8048         0.9048         0.1060        0.1173                   46.1818
+RandomForest        Ensemble (bagging)           9            0.8991        0.8417       0.0205              0.9099     0.8596         0.9653          0.7500       0.9309         0.9057         0.0881      162.8102                    2.0566
+LightGBM                      Boosting           9            0.8719        0.8415       0.0187              0.8700     0.8581         0.9517          0.6627       0.9611         0.8786         0.1185       15.1159                    5.6462
+MLP                     Neural network           9            0.9041        0.8390       0.0200              0.8482     0.8523         0.9723          0.8655       0.8256         0.9149         0.0696       16.2590                    0.3654
+LightGBM_tuned                Boosting           9            0.9080        0.8430       0.0194              0.8607     0.8567         0.9731          0.8664       0.8355         0.9180         0.0661        9.8299                    3.0933
+
+plots in /Users/pranavisistla/Desktop/ml_hackathon/PathSnap/results/models/plots
+== 8/10 HMM decoder tuning
+fold model 0 fitted
+fold model 1 fitted
+fold model 2 fitted
+00000006: 1450 pts, lattice+grid in 0.6s
+00000008: 3093 pts, lattice+grid in 1.4s
+00000012: 1608 pts, lattice+grid in 0.5s
+00000018: 379 pts, lattice+grid in 0.3s
+00000035: 1643 pts, lattice+grid in 0.9s
+00000044: 546 pts, lattice+grid in 0.3s
+00000045: 640 pts, lattice+grid in 0.2s
+00000047: 1272 pts, lattice+grid in 0.7s
+00000050: 518 pts, lattice+grid in 0.2s
+00000058: 599 pts, lattice+grid in 0.6s
+00000066: 4325 pts, lattice+grid in 1.2s
+00000070: 2076 pts, lattice+grid in 0.8s
+00000074: 1929 pts, lattice+grid in 0.9s
+00000081: 3224 pts, lattice+grid in 1.2s
+00000083: 1507 pts, lattice+grid in 0.8s
+00000084: 16031 pts, lattice+grid in 5.0s
+00000088: 876 pts, lattice+grid in 0.6s
+00000092: 7892 pts, lattice+grid in 3.5s
+00000093: 1211 pts, lattice+grid in 0.9s
+00000098: 5584 pts, lattice+grid in 2.0s
+w_emit    0.25    0.50    1.00    2.00
+beta                                  
+2.0     0.9014  0.9058  0.9062  0.9029
+5.0     0.9073  0.9025  0.9016  0.8993
+10.0    0.9025  0.9016  0.8993  0.8942
+20.0    0.9016  0.8993  0.8942  0.8900
+50.0    0.8964  0.8944  0.8861  0.8785
+
+classifier-only accuracy on tuning trips: 0.8370
+best decoder: beta=5.0, w_emit=0.25 -> accuracy 0.9073  (saved artifacts/hmm_params.json)
+== 9/10 classifier vs HMM
+00000000: clf 0.9397 -> hmm 0.9844 | continuity 0.984 -> 1.000 | breaks 0 | 0.4s
+00000007: clf 0.9254 -> hmm 0.9513 | continuity 0.999 -> 1.000 | breaks 0 | 0.17s
+00000009: clf 0.8456 -> hmm 0.8866 | continuity 0.962 -> 0.998 | breaks 0 | 0.5s
+00000040: clf 0.9169 -> hmm 0.9696 | continuity 0.989 -> 1.000 | breaks 0 | 0.48s
+00000052: clf 0.9504 -> hmm 0.9847 | continuity 0.981 -> 1.000 | breaks 0 | 0.08s
+00000056: clf 0.8917 -> hmm 0.9477 | continuity 0.935 -> 0.999 | breaks 0 | 1.15s
+00000065: clf 0.8229 -> hmm 0.8789 | continuity 0.962 -> 1.000 | breaks 1 | 0.27s
+00000076: clf 0.8748 -> hmm 0.9563 | continuity 0.952 -> 0.997 | breaks 0 | 0.73s
+00000077: clf 0.6855 -> hmm 0.7942 | continuity 0.991 -> 1.000 | breaks 0 | 1.11s
+00000091: clf 0.8432 -> hmm 0.9245 | continuity 0.947 -> 0.997 | breaks 0 | 0.32s
+
+             trip_id  n_points  n_scored_points  accuracy_hmm  continuity_hmm  accuracy_clf  continuity_clf  route_arc_precision  route_arc_recall  chain_breaks  runtime_s
+            00000000      2503             2503        0.9844          1.0000        0.9397          0.9836               0.9611            0.9943             0       0.40
+            00000007      1354             1354        0.9513          1.0000        0.9254          0.9985               0.9918            1.0000             0       0.17
+            00000009      1049             1049        0.8866          0.9981        0.8456          0.9618               0.9077            0.9779             0       0.50
+            00000040      2995             2995        0.9696          1.0000        0.9169          0.9893               0.9801            0.9933             0       0.48
+            00000052       262              262        0.9847          1.0000        0.9504          0.9808               0.9759            0.9878             0       0.08
+            00000056      3958             3941        0.9477          0.9990        0.8917          0.9351               0.9682            0.9885             0       1.15
+            00000065       768              768        0.8789          1.0000        0.8229          0.9622               0.9343            0.9922             1       0.27
+            00000076      1486             1486        0.9563          0.9973        0.8748          0.9522               0.9025            0.9672             0       0.73
+            00000077      3911             3911        0.7942          1.0000        0.6855          0.9908               0.8624            1.0000             0       1.11
+            00000091       874              874        0.9245          0.9966        0.8432          0.9473               0.9167            0.9565             0       0.32
+ALL (point-weighted)     19160            19143        0.9188          0.9993        0.8542          0.9708               0.9372            0.9896             1       5.21
+== 10/10 folium maps
+saved results/maps/student_test_00000000.html  (Trip 00000000 | accuracy: classifier 0.940, +HMM 0.984)
+saved results/maps/student_test_00000007.html  (Trip 00000007 | accuracy: classifier 0.925, +HMM 0.951)
+saved results/maps/student_test_00000009.html  (Trip 00000009 | accuracy: classifier 0.846, +HMM 0.887)
+saved results/maps/student_test_00000040.html  (Trip 00000040 | accuracy: classifier 0.917, +HMM 0.970)
+saved results/maps/student_test_00000052.html  (Trip 00000052 | accuracy: classifier 0.950, +HMM 0.985)
+saved results/maps/student_test_00000056.html  (Trip 00000056 | accuracy: classifier 0.892, +HMM 0.948)
+saved results/maps/student_test_00000065.html  (Trip 00000065 | accuracy: classifier 0.823, +HMM 0.879)
+saved results/maps/student_test_00000076.html  (Trip 00000076 | accuracy: classifier 0.875, +HMM 0.956)
+saved results/maps/student_test_00000077.html  (Trip 00000077 | accuracy: classifier 0.686, +HMM 0.794)
+saved results/maps/student_test_00000091.html  (Trip 00000091 | accuracy: classifier 0.843, +HMM 0.924)
+Done. Results in results/models, results/hmm, results/maps; model in artifacts/.

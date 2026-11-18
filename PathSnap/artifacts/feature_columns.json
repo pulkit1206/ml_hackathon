@@ -1,0 +1,11 @@
+[
+  "heading_diff",
+  "dist_minus_min",
+  "proj_frac",
+  "dist",
+  "speed",
+  "conn_prev_nearest",
+  "dist_rank",
+  "arc_len",
+  "n_cands"
+]
