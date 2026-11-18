@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PathSnap · Evaluation Console</title>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<script src="vendor/leaflet/leaflet.js"></script>
+<style>
+  :root {
+    --ink: #10151c; --panel: #161d27; --card: #1d2633; --line: #2a3546;
+    --text: #e6ebf2; --muted: #8b98ab; --accent: #2dd4bf; --accent-dim: #134e4a;
+    --start: #22c55e; --end: #ef4444; --gps: #3b82f6; --warn: #f59e0b;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--ink); color: var(--text);
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; }
+  .app { display: grid; grid-template-columns: 360px 1fr; height: 100vh; }
+  aside { background: var(--panel); border-right: 1px solid var(--line); overflow-y: auto;
+    display: flex; flex-direction: column; }
+  .brand { padding: 20px 22px 16px; border-bottom: 1px solid var(--line); }
+  .brand h1 { margin: 0; font-size: 22px; letter-spacing: .3px; }
+  .brand h1 span { color: var(--accent); }
+  .brand p { margin: 4px 0 0; color: var(--muted); font-size: 12.5px; }
+  section { padding: 16px 22px; border-bottom: 1px solid var(--line); }
+  h2 { margin: 0 0 10px; font-size: 11px; font-weight: 600; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; }
+  .row { display: flex; gap: 8px; }
+  input[type=text] { flex: 1; min-width: 0; background: var(--ink); color: var(--text);
+    border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font: 13px var(--mono); }
+  input[type=text]:focus { outline: none; border-color: var(--accent); }
+  button { border: 0; border-radius: 8px; cursor: pointer; font: inherit; font-weight: 600; }
+  .btn { background: var(--card); color: var(--text); border: 1px solid var(--line); padding: 8px 12px; }
+  .btn:hover { border-color: var(--accent); }
+  .btn-run { width: 100%; margin-top: 12px; padding: 12px; background: var(--accent); color: #062a26; font-size: 15px; }
+  .btn-run:disabled { background: var(--card); color: var(--muted); cursor: not-allowed; }
+  .status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted);
+    margin-top: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+  .dot.ok { background: var(--start); box-shadow: 0 0 6px var(--start); }
+  .dot.err { background: var(--end); }
+  .trips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .trip { background: var(--card); color: var(--text); border: 1px solid var(--line); padding: 10px;
+    text-align: left; font: 13px var(--mono); display: flex; justify-content: space-between; align-items: center; }
+  .trip:hover { border-color: var(--accent); }
+  .trip.sel { border-color: var(--accent); background: var(--accent-dim); }
+  .trip .badge { font-size: 11px; color: var(--accent); }
+  .empty { color: var(--muted); font-size: 13px; }
+  .hero { background: linear-gradient(135deg, #12332f, var(--card)); border: 1px solid var(--accent-dim);
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+  .hero .label { color: var(--muted); font-size: 12px; }
+  .hero .big { font: 700 34px var(--mono); color: var(--accent); }
+  .hero .delta { font: 12px var(--mono); color: var(--start); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+  .card .label { color: var(--muted); font-size: 11.5px; }
+  .card .val { font: 600 17px var(--mono); margin-top: 2px; }
+  .log { font: 12px var(--mono); max-height: 180px; overflow-y: auto; }
+  .log div { display: grid; grid-template-columns: 84px 1fr auto; gap: 8px; padding: 4px 0;
+    border-bottom: 1px dashed var(--line); color: var(--muted); }
+  .log .ok { color: var(--start); } .log .bad { color: var(--end); }
+  main { position: relative; }
+  #map { position: absolute; inset: 0; }
+  .overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(16, 21, 28, .78); z-index: 500; color: var(--muted); font-size: 15px; text-align: center; }
+  .overlay.hidden { display: none; }
+  .spinner { width: 34px; height: 34px; border: 3px solid var(--line); border-top-color: var(--accent);
+    border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .legend { position: absolute; left: 14px; bottom: 22px; z-index: 600; background: rgba(22, 29, 39, .92);
+    border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 12.5px; }
+  .legend div { display: flex; align-items: center; gap: 8px; margin: 3px 0; }
+  .sw { width: 22px; height: 4px; border-radius: 2px; }
+  .sw.circle { width: 9px; height: 9px; border-radius: 50%; }
+  .tripinfo { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); z-index: 600;
+    background: rgba(22, 29, 39, .92); border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 16px; font: 12.5px var(--mono); display: none; }
+  .pin { position: relative; }
+  .pin svg { filter: drop-shadow(0 2px 2px rgba(0,0,0,.45)); }
+  .pin b { position: absolute; top: 7px; left: 0; width: 30px; text-align: center; color: #fff;
+    font: 700 12px -apple-system, sans-serif; }
+  .leaflet-control-layers { background: var(--panel) !important; color: var(--text) !important;
+    border: 1px solid var(--line) !important; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand">
+      <h1>Path<span>Snap</span></h1>
+      <p>Map-matching evaluation console · classifier + HMM/Viterbi</p>
+    </div>
+
+    <section>
+      <h2>API (Laptop 1)</h2>
+      <div class="row">
+        <input id="api" type="text" spellcheck="false" placeholder="http://192.168.x.x:8000">
+        <button class="btn" id="connect">Connect</button>
+      </div>
+      <div class="status"><span class="dot" id="dot"></span><span id="status">Not connected</span></div>
+    </section>
+
+    <section>
+      <h2>Evaluation trips <span id="tripcount"></span></h2>
+      <div class="trips" id="trips"><div class="empty">Connect to the API to load trips.</div></div>
+      <button class="btn-run" id="run" disabled>Select a trip</button>
+    </section>
+
+    <section id="results" style="display:none">
+      <h2>Results <span id="restrip"></span></h2>
+      <div class="hero">
+        <div class="label">Accuracy · classifier + HMM</div>
+        <div class="big" id="acc-hmm">–</div>
+        <div class="delta" id="acc-delta"></div>
+      </div>
+      <div class="grid">
+        <div class="card"><div class="label">Classifier only</div><div class="val" id="acc-clf">–</div></div>
+        <div class="card"><div class="label">Route continuity</div><div class="val" id="cont">–</div></div>
+        <div class="card"><div class="label">GPS points scored</div><div class="val" id="pts">–</div></div>
+        <div class="card"><div class="label">Route arc recall</div><div class="val" id="recall">–</div></div>
+        <div class="card"><div class="label">Server time</div><div class="val" id="srv">–</div></div>
+        <div class="card"><div class="label">Round trip</div><div class="val" id="rt">–</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Request log</h2>
+      <div class="log" id="log"><div><span></span><span>No requests yet</span><span></span></div></div>
+    </section>
+  </aside>
+
+  <main>
+    <div id="map"></div>
+    <div class="tripinfo" id="tripinfo"></div>
+    <div class="legend">
+      <div><span class="sw" style="background:var(--accent)"></span>Predicted route (API)</div>
+      <div><span class="sw circle" style="background:var(--gps)"></span>GPS observations</div>
+      <div><span class="sw circle" style="background:var(--start)"></span>Start</div>
+      <div><span class="sw circle" style="background:var(--end)"></span>End</div>
+    </div>
+    <div class="overlay" id="overlay"><div>Select a trip and press <b>Run map-matching</b>.</div></div>
+  </main>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } },
+};
+const params = new URLSearchParams(location.search);
+$("api").value = params.get("api") || store.get("pathsnap_api") || "http://localhost:8000";
+
+let selected = null;
+const scores = {};
+
+// ---------- map ----------
+const map = L.map("map", { preferCanvas: true, zoomControl: true }).setView([20, 0], 2);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19, attribution: "&copy; OpenStreetMap contributors",
+}).addTo(map);
+const routeLayer = L.layerGroup().addTo(map);
+const gpsLayer = L.layerGroup().addTo(map);
+const pinLayer = L.layerGroup().addTo(map);
+L.control.layers(null, {
+  "Predicted route": routeLayer, "GPS observations": gpsLayer, "Start / end pins": pinLayer,
+}, { collapsed: false, position: "topright" }).addTo(map);
+
+function pinIcon(color, letter) {
+  return L.divIcon({
+    className: "pin", iconSize: [30, 42], iconAnchor: [15, 41], popupAnchor: [0, -36],
+    html: `<svg width="30" height="42" viewBox="0 0 30 42"><path d="M15 1C7.3 1 1 7.2 1 14.9 1 25.4 15 41 15 41s14-15.6 14-26.1C29 7.2 22.7 1 15 1z" fill="${color}" stroke="#fff" stroke-width="2"/></svg><b>${letter}</b>`,
+  });
+}
+
+// ---------- helpers ----------
+const pct = (x, d = 2) => (x == null || isNaN(x) ? "–" : (x * 100).toFixed(d) + "%");
+const apiBase = () => $("api").value.trim().replace(/\/+$/, "");
+
+function setStatus(state, text) {
+  $("dot").className = "dot " + state;
+  $("status").textContent = text;
+}
+
+function addLog(trip, ok, info) {
+  const log = $("log");
+  if (log.dataset.empty !== "no") { log.innerHTML = ""; log.dataset.empty = "no"; }
+  const row = document.createElement("div");
+  const t = document.createElement("span"); t.textContent = new Date().toLocaleTimeString();
+  const m = document.createElement("span"); m.textContent = `POST /predict ${trip}`;
+  const s = document.createElement("span"); s.textContent = info; s.className = ok ? "ok" : "bad";
+  row.append(t, m, s);
+  log.prepend(row);
+}
+
+function renderTrips(ids) {
+  const box = $("trips");
+  box.innerHTML = "";
+  $("tripcount").textContent = ids.length ? `${ids.length} trips` : "";
+  if (!ids.length) { box.innerHTML = '<div class="empty">No trips found on the server.</div>'; return; }
+  ids.forEach((id) => {
+    const b = document.createElement("button");
+    b.className = "trip" + (id === selected ? " sel" : "");
+    const name = document.createElement("span"); name.textContent = id;
+    const badge = document.createElement("span"); badge.className = "badge";
+    badge.textContent = scores[id] != null ? pct(scores[id], 1) : "";
+    b.append(name, badge);
+    b.onclick = () => { selected = id; renderTrips(ids); updateRunButton(); };
+    box.appendChild(b);
+  });
+}
+
+function updateRunButton() {
+  const r = $("run");
+  r.disabled = !selected;
+  r.textContent = selected ? `Run map-matching · ${selected}` : "Select a trip";
+}
+
+// ---------- API calls ----------
+let tripIds = [];
+async function connect() {
+  setStatus("", "Connecting…");
+  store.set("pathsnap_api", apiBase());
+  try {
+    const r = await fetch(`${apiBase()}/trips`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    tripIds = (await r.json()).trips;
+    setStatus("ok", `Connected · ${apiBase()}`);
+    renderTrips(tripIds);
+  } catch (e) {
+    setStatus("err", `Cannot reach API (${e.message})`);
+    $("trips").innerHTML = '<div class="empty">Check the address and that the API is running on Laptop 1.</div>';
+  }
+}
+
+async function run() {
+  if (!selected) return;
+  const trip = selected;
+  $("run").disabled = true;
+  $("overlay").classList.remove("hidden");
+  $("overlay").innerHTML = `<div><div class="spinner"></div>Sending trip <b>${trip}</b> to the API…</div>`;
+  const t0 = performance.now();
+  try {
+    const r = await fetch(`${apiBase()}/predict`, {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ trip_id: trip }),
+    });
+    const rt = (performance.now() - t0) / 1000;
+    if (!r.ok) throw new Error(`HTTP ${r.status}: ${await r.text()}`);
+    const res = await r.json();
+    showResult(res, rt);
+    addLog(trip, true, `200 · ${rt.toFixed(2)}s`);
+  } catch (e) {
+    addLog(trip, false, "error");
+    $("overlay").innerHTML = `<div>Request failed<br><small>${String(e.message).replace(/</g, "&lt;")}</small></div>`;
+  } finally {
+    updateRunButton();
+  }
+}
+
+function showResult(res, rt) {
+  const m = res.metrics;
+  $("results").style.display = "";
+  $("restrip").textContent = res.trip_id;
+  if (m) {
+    scores[res.trip_id] = m.accuracy_hmm;
+    $("acc-hmm").textContent = pct(m.accuracy_hmm);
+    const d = (m.accuracy_hmm - m.accuracy_clf) * 100;
+    $("acc-delta").textContent = `${d >= 0 ? "+" : ""}${d.toFixed(2)} pts vs classifier only`;
+    $("acc-clf").textContent = pct(m.accuracy_clf);
+    $("cont").textContent = pct(m.continuity_hmm, 1);
+    $("pts").textContent = `${m.n_scored_points} / ${m.n_points}`;
+    $("recall").textContent = pct(m.route_arc_recall, 1);
+  } else {
+    ["acc-hmm", "acc-clf", "cont", "pts", "recall"].forEach((k) => ($(k).textContent = "–"));
+    $("acc-delta").textContent = "No reference route on the server";
+  }
+  $("srv").textContent = `${res.runtime_s.toFixed(2)} s`;
+  $("rt").textContent = `${rt.toFixed(2)} s`;
+  renderTrips(tripIds);
+
+  // map layers
+  routeLayer.clearLayers(); gpsLayer.clearLayers(); pinLayer.clearLayers();
+  const segs = res.predicted_route_segments;
+  // GPS first, route afterwards, so the predicted route is drawn on top of the dots
+  res.gps.forEach((p) => L.circleMarker(p, { radius: 2.5, color: "#3b82f6", weight: 0,
+    fillOpacity: 0.55 }).addTo(gpsLayer));
+  L.polyline(segs, { color: "#ffffff", weight: 8, opacity: 0.9 }).addTo(routeLayer);      // casing
+  L.polyline(segs, { color: "#14b8a6", weight: 5, opacity: 1 }).addTo(routeLayer);
+  const start = res.start || res.gps[0], end = res.end || res.gps[res.gps.length - 1];
+  L.marker(start, { icon: pinIcon("#22c55e", "S"), zIndexOffset: 1000 })
+    .bindPopup(`<b>Start</b><br>${start[0].toFixed(5)}, ${start[1].toFixed(5)}`).addTo(pinLayer);
+  L.marker(end, { icon: pinIcon("#ef4444", "E"), zIndexOffset: 1000 })
+    .bindPopup(`<b>End</b><br>${end[0].toFixed(5)}, ${end[1].toFixed(5)}`).addTo(pinLayer);
+  map.fitBounds(L.latLngBounds(res.gps.concat([start, end])), { padding: [40, 40] });
+
+  const info = $("tripinfo");
+  info.style.display = "block";
+  info.textContent = `Trip ${res.trip_id} · ${res.n_gps_points ?? res.gps.length} GPS points · ${segs.length} road arcs`;
+  $("overlay").classList.add("hidden");
+}
+
+$("connect").onclick = connect;
+$("api").addEventListener("keydown", (e) => { if (e.key === "Enter") connect(); });
+$("run").onclick = run;
+connect();
+</script>
+</body>
+</html>
