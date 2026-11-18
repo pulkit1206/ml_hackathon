@@ -1,0 +1,33 @@
+{
+  "total_raw_label_rows": 172642,
+  "raw_labelled_trip_count": 70,
+  "raw_unmatched_rows": 16820,
+  "trip_00000054_excluded_rows": 16609,
+  "cleaned_matched_rows": 155370,
+  "cleaned_trip_count": 70,
+  "radius_m": 50,
+  "unlabelled_trip_count": 10,
+  "total_candidate_rows": 1496335,
+  "supports_200k_rows": true,
+  "positive_rows": 153703,
+  "negative_rows": 1342632,
+  "positive_rate": 0.10271964499928157,
+  "labelled_observations_total": 155370,
+  "observations_with_candidates": 154314,
+  "candidate_coverage_rate": 0.9932033211044603,
+  "observations_with_positive_candidate": 153703,
+  "positive_recall_within_radius": 0.9892707729934994,
+  "model_feature_columns": [
+    "distance_m",
+    "distance_rank",
+    "arc_length_m",
+    "along_arc_fraction",
+    "candidate_count",
+    "distance_gap_m",
+    "gps_heading_deg",
+    "road_heading_deg",
+    "heading_diff_deg",
+    "speed_mps",
+    "connected_to_prev"
+  ]
+}

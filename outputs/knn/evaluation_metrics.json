@@ -1,0 +1,50 @@
+[
+  {
+    "observation_top1_accuracy": 0.792557963828682,
+    "observations_evaluated": 21177,
+    "candidate_macro_f1": 0.8733534646725638,
+    "candidate_precision": 0.7995657004342995,
+    "candidate_recall": 0.747650753175615,
+    "candidate_log_loss": 0.5911656925813834,
+    "confusion_matrix": [
+      [
+        174231,
+        3969
+      ],
+      [
+        5344,
+        15833
+      ]
+    ],
+    "k": 5,
+    "weights": "distance",
+    "metric": "euclidean",
+    "total_fit_time_s": 5.413617599988356,
+    "total_inference_time_s": 57.9965107999742,
+    "full_sample_fit_time_s": 1.4892363999970257
+  },
+  {
+    "observation_top1_accuracy": 0.8176795580110497,
+    "observations_evaluated": 21177,
+    "candidate_macro_f1": 0.8803626812984207,
+    "candidate_precision": 0.8227317426634232,
+    "candidate_recall": 0.7506256788024743,
+    "candidate_log_loss": 0.20934123810685895,
+    "confusion_matrix": [
+      [
+        174775,
+        3425
+      ],
+      [
+        5281,
+        15896
+      ]
+    ],
+    "k": 25,
+    "weights": "distance",
+    "metric": "euclidean",
+    "total_fit_time_s": 6.334515200054739,
+    "total_inference_time_s": 103.68659050000133,
+    "full_sample_fit_time_s": 1.2836663000052795
+  }
+]

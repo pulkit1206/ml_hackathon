@@ -1,0 +1,51 @@
+{
+  "dataset_path": "outputs/dataset/knn_train_candidates_r50.csv",
+  "random_seed": 42,
+  "target_sample_rows": 200000,
+  "n_splits": 5,
+  "cv_strategy": "GroupKFold(groups=trip_id)",
+  "k_values": [
+    5,
+    25
+  ],
+  "weights": "distance",
+  "metric": "euclidean",
+  "feature_columns": [
+    "distance_m",
+    "distance_rank",
+    "arc_length_m",
+    "along_arc_fraction",
+    "candidate_count",
+    "distance_gap_m",
+    "gps_heading_deg",
+    "road_heading_deg",
+    "heading_diff_deg",
+    "speed_mps",
+    "connected_to_prev"
+  ],
+  "cleaning_stats": {
+    "input_candidate_rows": 1496335,
+    "input_observations": 154314,
+    "candidate_miss_observations_without_positive": 611,
+    "candidate_miss_rows_excluded": 13030,
+    "cleaned_candidate_rows": 1483305,
+    "cleaned_observations": 153703,
+    "cleaned_positive_rows": 153703,
+    "cleaned_negative_rows": 1329602,
+    "feature_nan_counts_before_imputation": {
+      "gps_heading_deg": 907,
+      "heading_diff_deg": 907,
+      "speed_mps": 881
+    }
+  },
+  "sampling_stats": {
+    "random_seed": 42,
+    "target_rows": 200000,
+    "sampled_rows": 199377,
+    "sampled_trips": 70,
+    "sampled_observations": 21177,
+    "sampled_positive_rows": 21177,
+    "sampled_negative_rows": 178200,
+    "sampled_positive_rate": 0.10621586241141155
+  }
+}

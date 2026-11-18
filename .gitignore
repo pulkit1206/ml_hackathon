@@ -1,0 +1,21 @@
+# Raw datasets & student data
+Student folder/
+train_gps_route_labels.csv
+
+# Python caches & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+env/
+.env
+
+# Large generated datasets & prediction dumps
+outputs/dataset/knn_train_candidates_r50.csv
+outputs/knn/student_test_predictions_k25.csv
+outputs/knn/oof_predictions_k*.csv
+outputs/candidates/00000001_candidates.csv
+outputs/features/
+outputs/alignment/train_alignment_labels.csv

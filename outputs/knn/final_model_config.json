@@ -1,0 +1,50 @@
+{
+  "selected_model": "distance_weighted_knn_k25",
+  "model_artifact": "outputs/knn/knn_k25_pipeline.joblib",
+  "prediction_module": "src/models/predict.py",
+  "configuration": {
+    "n_neighbors": 25,
+    "weights": "distance",
+    "metric": "euclidean",
+    "imputer": "SimpleImputer(strategy='median')",
+    "scaler": "StandardScaler()",
+    "search_radius_m": 50,
+    "decision_threshold": 0.5,
+    "random_seed": 42
+  },
+  "model_feature_columns": [
+    "distance_m",
+    "distance_rank",
+    "arc_length_m",
+    "along_arc_fraction",
+    "candidate_count",
+    "distance_gap_m",
+    "gps_heading_deg",
+    "road_heading_deg",
+    "heading_diff_deg",
+    "speed_mps",
+    "connected_to_prev"
+  ],
+  "prediction_output_columns": [
+    "trip_id",
+    "point_id",
+    "candidate_arc_id",
+    "distance_m",
+    "distance_rank",
+    "predicted_probability",
+    "predicted_label",
+    "prediction_rank",
+    "is_top1"
+  ],
+  "tie_breaking_rule": "(-predicted_probability, distance_m, distance_rank, candidate_arc_id)",
+  "baseline_cv_metrics": {
+    "cv_strategy": "GroupKFold(n_splits=5, groups=trip_id)",
+    "sampled_rows": 199377,
+    "sampled_observations": 21177,
+    "observation_top1_accuracy": 0.8176795580110497,
+    "candidate_macro_f1": 0.880363008949975,
+    "candidate_precision": 0.8227317421200455,
+    "candidate_recall": 0.7506256788024744,
+    "candidate_log_loss": 0.20934124221303152
+  }
+}
